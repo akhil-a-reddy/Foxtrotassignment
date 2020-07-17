@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Questions</h1>
+
+<form id="form1" name="form1" action="javascript:submitData();" method="post">
+  <p> Are employees authorized to use Foxtrot Division Airway’s information
+  systems to access, or otherwise participate in, social media/networking sites?</p>
+  <input type="radio" id="yes" name="yes" value="yes">
+  <label for="yes">Yes</label><br>
+  <input type="radio" id="no" name="no" value="no">
+  <label for="no">No</label><br>
+
+
+  <br>
+
+  <p>What are the restrictions on the use of social media/networking sites?</p>
+   <input type="checkbox" id="Q1" name="Q1" value="Use must be consistent with all laws, regulations, and Foxtrot Division Airways
+policies">
+    <label for="Q!"> Use must be consistent with all laws, regulations, and Foxtrot Division Airways
+policies</label><br>
+
+   <input type="checkbox" id="Q2" name="Q2" value=" Employees may not post any Foxtrot Division Airway’s confidential, proprietary,
+or other sensitive information">
+    <label for="Q2"> Employees may not post any Foxtrot Division Airway’s confidential, proprietary,
+or other sensitive information</label><br>
+
+   <input type="checkbox" id="Q3" name="Q3" value="If expressing views, opinions, or other beliefs, the employee must provide a
+disclaimer that the views expressed are not those of Foxtrot Division Airways">
+   <label for="vehicle3"> If expressing views, opinions, or other beliefs, the employee must provide a
+disclaimer that the views expressed are not those of Foxtrot Division Airways</label><br>
+
+   <input type="checkbox" id="Q4" name="Q4" value="other" onchange="toggleTextArea();" value="1"/>
+      <label for="Q4"> other</label><br><br>
+
+   <label for="textfield2"></label>
+  <textarea style="display: none;" name="textfield2" rows="8" id="textfield2"></textarea>
+
+  <input type="submit" value="Submit Data">
+</form>
+
+<script>
+function toggleTextArea() {
+	var theForm = document.form1;
+	var theCheck = theForm.Q4;
+	var theTextArea = theForm.textfield2;
+	if(theCheck.checked == true) {
+		theTextArea.style.display = "block";
+	} else {
+		theTextArea.style.display = "none";
+	}
+}
+
+
+
+function submitData() {
+  const q1 = document.getElementById( "Q1" ).value;
+  const q2 = document.getElementById( "Q2" ).value + document.getElementById( "Q3" ).value + document.getElementById( "Q4" ).value +document.getElementById( "textfield2" ).value;
+
+
+  const data = {
+                 "question1":q1,
+                 "question2":q2
+        };
+
+  const options = {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+          'Content-Type': 'application/json'
+      }
+}
+
+
+
+fetch('http://206.189.225.44:3300/submitData', options)
+    .then(res => {
+        if (res.ok) {
+            console.log(res);
+        } else {
+            return Promise.reject('An error occurred.');
+        }
+    })
+    .then(res => console.log(res));
+
+
+}
+</script>
+
+</body>
+</html>
